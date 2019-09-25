@@ -34,25 +34,31 @@ void renderPixel(int x, int y) {
 	image[x][y] = 1;
 
 	// TODO:  light up the pixel's symmetric counterpart
-	image[-x][-y]= 1;
+    //  The arch is 1/4 circle, at the first section, so
+    //symmetric counter part is the reflected image between the line of 45 degree, counter part of (x,y) is (y,x)
+    image[y][x] = 1;
+
 }
 
 void rasterizeArc(int radius) {
 	// TODO:  rasterize the arc using renderPixel to light up pixels
-  int x = 0;
-  int y = radius;
-  double d= 5.0 / 4.0 - radius;
-  renderPixel(x, y);
-  while (y > x) {
-  if (d < 0)
-  d += 2.0 * X + 3.0;
-  else { '* Select SE *'
-  d += 2.0 * (x- y) + 5.0;
-  y--;
-  }
-  x++;
-  renderPixel(x, y);
-   }
+    int x = 0;
+    int y = radius;
+    //d=(x + 1)^2 + (y+1/2)^2 -radius^2
+    //at the beginning, x=0, y=radius =>
+    double d= 5.0 / 4.0 - radius;
+    renderPixel(x, y);
+    while (y > x) {
+      if (d < 0) {
+         d += 2.0 * x + 3.0;
+      }
+      else {
+         d += 2.0 * (x- y) + 5.0;
+         y--;
+      }
+      x++;
+      renderPixel(x, y);
+     }
 }
 
 // You shouldn't need to change anything below this point.
